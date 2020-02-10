@@ -182,6 +182,7 @@ body {
 .toolbar-container .joint-toolbar {
     width: 100%;
     height: 100%;
+    justify-content: space-evenly;
 }
 
 .toolbar-container label {

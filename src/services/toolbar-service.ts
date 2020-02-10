@@ -1,16 +1,3 @@
-/*! Rappid v3.1.1 - HTML5 Diagramming Framework - TRIAL VERSION
-
-Copyright (c) 2015 client IO
-
- 2020-02-03 
-
-
-This Source Code Form is subject to the terms of the Rappid Trial License
-, v. 2.0. If a copy of the Rappid License was not distributed with this
-file, You can obtain one at http://jointjs.com/license/rappid_v2.txt
- or from the Rappid archive as was distributed by client IO. See the LICENSE file.*/
-
-
 import * as joint from '../../vendor/rappid';
 
 export class ToolbarService {
@@ -39,13 +26,10 @@ export class ToolbarService {
                 'undo-redo': { index: 1 },
                 'clear': { index: 2 },
                 'export': { index: 3 },
-                'print': { index: 4 },
-                'fullscreen': { index: 5 },
-                'order': { index: 6 },
-                'layout': { index: 7 },
-                'zoom': { index: 8 },
-                'grid': { index: 9 },
-                'snapline': { index: 10 }
+                'fullscreen': { index: 4 },
+                'zoom': { index: 5 },
+                'grid': { index: 6 },
+                'snapline': { index: 7 }
             },
 
             tools: [
@@ -88,20 +72,6 @@ export class ToolbarService {
                 },
                 {
                     type: 'button',
-                    name: 'svg',
-                    group: 'export',
-                    text: 'Export SVG',
-                    attrs: {
-                        button: {
-                            id: 'btn-svg',
-                            'data-tooltip': 'Open as SVG in a pop-up',
-                            'data-tooltip-position': 'top',
-                            'data-tooltip-position-selector': '.toolbar-container'
-                        }
-                    }
-                },
-                {
-                    type: 'button',
                     name: 'png',
                     group: 'export',
                     text: 'Export PNG',
@@ -109,60 +79,6 @@ export class ToolbarService {
                         button: {
                             id: 'btn-png',
                             'data-tooltip': 'Open as PNG in a pop-up',
-                            'data-tooltip-position': 'top',
-                            'data-tooltip-position-selector': '.toolbar-container'
-                        }
-                    }
-                },
-                {
-                    type: 'button',
-                    name: 'print',
-                    group: 'print',
-                    attrs: {
-                        button: {
-                            id: 'btn-print',
-                            'data-tooltip': 'Open a Print Dialog',
-                            'data-tooltip-position': 'top',
-                            'data-tooltip-position-selector': '.toolbar-container'
-                        }
-                    }
-                },
-                {
-                    type: 'button',
-                    name: 'to-front',
-                    group: 'order',
-                    text: 'Send To Front',
-                    attrs: {
-                        button: {
-                            id: 'btn-to-front',
-                            'data-tooltip': 'Bring Object to Front',
-                            'data-tooltip-position': 'top',
-                            'data-tooltip-position-selector': '.toolbar-container'
-                        }
-                    }
-                },
-                {
-                    type: 'button',
-                    name: 'to-back',
-                    group: 'order',
-                    text: 'Send To Back',
-                    attrs: {
-                        button: {
-                            id: 'btn-to-back',
-                            'data-tooltip': 'Send Object to Back',
-                            'data-tooltip-position': 'top',
-                            'data-tooltip-position-selector': '.toolbar-container'
-                        }
-                    }
-                },
-                {
-                    type: 'button',
-                    group: 'layout',
-                    name: 'layout',
-                    attrs: {
-                        button: {
-                            id: 'btn-layout',
-                            'data-tooltip': 'Auto-layout Graph',
                             'data-tooltip-position': 'top',
                             'data-tooltip-position-selector': '.toolbar-container'
                         }

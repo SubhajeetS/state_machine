@@ -1,5 +1,4 @@
 import * as joint from '../vendor/rappid';
-import * as dagre from 'dagre';
 import * as _ from 'lodash';
 import {StencilService} from './services/stencil-service';
 import {ToolbarService} from './services/toolbar-service';
@@ -82,7 +81,7 @@ class App {
         const paper = this.paper = new joint.dia.Paper({
             width: 1000,
             height: 1000,
-            gridSize: 10,
+            gridSize: 8,
             drawGrid: true,
             model: graph,
             cellViewNamespace: appShapes,
@@ -292,24 +291,13 @@ class App {
         this.toolbarService.create(this.commandManager, this.paperScroller);
 
         this.toolbarService.toolbar.on({
-            'svg:pointerclick': this.openAsSVG.bind(this),
             'png:pointerclick': this.openAsPNG.bind(this),
-            'to-front:pointerclick': this.applyOnSelection.bind(this, 'toFront'),
-            'to-back:pointerclick': this.applyOnSelection.bind(this, 'toBack'),
-            'layout:pointerclick': this.layoutDirectedGraph.bind(this),
-            'snapline:change': this.changeSnapLines.bind(this),
             'clear:pointerclick': this.graph.clear.bind(this.graph),
             'print:pointerclick': this.paper.print.bind(this.paper),
             'grid-size:change': this.paper.setGridSize.bind(this.paper)
         });
 
         this.renderPlugin('.toolbar-container', this.toolbarService.toolbar);
-    }
-
-    applyOnSelection(method: string) {
-        this.graph.startBatch('selection');
-        this.selection.collection.models.forEach(function(model: joint.dia.Element) { model[method](); });
-        this.graph.stopBatch('selection');
     }
 
     changeSnapLines(checked: boolean) {
@@ -339,18 +327,6 @@ class App {
         });
     }
 
-    openAsSVG() {
-
-        this.paper.hideTools().toSVG((svg: string) => {
-            new joint.ui.Lightbox({
-                image: 'data:image/svg+xml,' + encodeURIComponent(svg),
-                downloadable: true,
-                fileName: 'Rappid'
-            }).open();
-            this.paper.showTools();
-        }, { preserveDimensions: true, convertImagesToDataUris: true });
-    }
-
     openAsPNG() {
 
         this.paper.hideTools().toPNG((dataURL: string) => {
@@ -369,20 +345,6 @@ class App {
             evt.preventDefault();
             this.paperScroller.zoom(delta * 0.2, { min: 0.2, max: 5, grid: 0.2, ox, oy });
         }
-    }
-
-    layoutDirectedGraph() {
-
-        joint.layout.DirectedGraph.layout(this.graph, {
-            graphlib: dagre.graphlib,
-            dagre: dagre,
-            setVertices: true,
-            rankDir: 'TB',
-            marginX: 100,
-            marginY: 100
-        });
-
-        this.paperScroller.centerContent();
     }
 
     renderPlugin(selector: string, plugin: any): void {

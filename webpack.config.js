@@ -1,10 +1,11 @@
 const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     entry: './index.ts',
     mode: 'development',
     output: {
-        filename: 'bundle3.js'
+        filename: '[bundle].[contenthash].js',
     },
     resolve: {
         extensions: ['.ts', '.js']
@@ -16,5 +17,10 @@ module.exports = {
         rules: [
             { test: /\.ts$/, use: 'ts-loader' }
         ]
-    }
+    },
+    plugins: [
+        new HtmlWebpackPlugin({
+          template: 'index.html'
+        })
+      ]
 };
