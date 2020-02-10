@@ -66,7 +66,6 @@ export class StencilService {
                             strokeDasharray: '0'
                         },
                         label: {
-                            text: 'State',
                             fill: '#c6c7e2',
                             fontFamily: 'Roboto Condensed',
                             fontWeight: 'Normal',
@@ -77,7 +76,7 @@ export class StencilService {
                 },
                 {
                     type: 'standard.Polygon',
-                    size: { width: 5, height: 3 },
+                    size: { width: 2, height: 1 },
                     attrs: {
                         root: {
                             dataTooltip: 'Branch',
@@ -92,7 +91,6 @@ export class StencilService {
                             strokeDasharray: '0'
                         },
                         label: {
-                            text: 'Branch',
                             fill: '#c6c7e2',
                             fontFamily: 'Roboto Condensed',
                             fontWeight: 'Normal',
@@ -100,7 +98,61 @@ export class StencilService {
                             strokeWidth: 0
                         }
                     }
-                }
+                },
+                {
+                    type: 'fsa.StartState',
+                    preserveAspectRatio: true,
+                    attrs: {
+                        root: {
+                            dataTooltip: 'Start State',
+                            dataTooltipPosition: 'left',
+                            dataTooltipPositionSelector: '.joint-stencil'
+                        },
+                        circle: {
+                            width: 50,
+                            height: 30,
+                            fill: '#61549c',
+                            'stroke-width': 0
+                        },
+                        text: {
+                            text: 'startState',
+                            fill: '#c6c7e2',
+                            'font-family': 'Roboto Condensed',
+                            'font-weight': 'Normal',
+                            'font-size': 11,
+                            'stroke-width': 0
+                        }
+                    }
+                },
+                {
+                    type: 'fsa.EndState',
+                    preserveAspectRatio: true,
+                    attrs: {
+                        root: {
+                            dataTooltip: 'End State',
+                            dataTooltipPosition: 'left',
+                            dataTooltipPositionSelector: '.joint-stencil'
+                        },
+                        '.inner': {
+                            fill: '#6a6c8a',
+                            stroke: 'transparent'
+                        },
+                        '.outer': {
+                            fill: 'transparent',
+                            stroke: '#61549c',
+                            'stroke-width': 2,
+                            'stroke-dasharray': '0'
+                        },
+                        text: {
+                            text: 'endState',
+                            fill: '#c6c7e2',
+                            'font-family': 'Roboto Condensed',
+                            'font-weight': 'Normal',
+                            'font-size': 11,
+                            'stroke-width': 0
+                        }
+                    }
+                },
             ]
         };
     }

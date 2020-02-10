@@ -29,7 +29,8 @@ export class ToolbarService {
                 'fullscreen': { index: 4 },
                 'zoom': { index: 5 },
                 'grid': { index: 6 },
-                'snapline': { index: 7 }
+                'snapline': { index: 7 },
+                'save': { index : 8}
             },
 
             tools: [
@@ -190,7 +191,20 @@ export class ToolbarService {
                             'data-tooltip-position-selector': '.toolbar-container'
                         }
                     }
-                }
+                },
+                {
+                    type: 'button',
+                    name: 'save',
+                    group: 'save',
+                    attrs: {
+                        button: {
+                            id: 'btn-save',
+                            'data-tooltip': 'Save',
+                            'data-tooltip-position': 'top',
+                            'data-tooltip-position-selector': '.toolbar-container'
+                        }
+                    }
+                },
             ]
         };
     }

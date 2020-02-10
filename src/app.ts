@@ -294,12 +294,17 @@ class App {
             'png:pointerclick': this.openAsPNG.bind(this),
             'clear:pointerclick': this.graph.clear.bind(this.graph),
             'print:pointerclick': this.paper.print.bind(this.paper),
-            'grid-size:change': this.paper.setGridSize.bind(this.paper)
+            'grid-size:change': this.paper.setGridSize.bind(this.paper),
+            'save:pointerclick': this.saveDiagram.bind(this),
         });
 
         this.renderPlugin('.toolbar-container', this.toolbarService.toolbar);
     }
 
+    saveDiagram() {
+        console.log(this.graph.toJSON());
+    }
+    
     changeSnapLines(checked: boolean) {
 
         if (checked) {
