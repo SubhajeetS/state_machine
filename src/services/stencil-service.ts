@@ -92,7 +92,7 @@ export class StencilService {
                             strokeDasharray: '0'
                         },
                         label: {
-                            text: 'branch',
+                            text: 'Branch',
                             fill: '#c6c7e2',
                             fontFamily: 'Roboto Condensed',
                             fontWeight: 'Normal',
