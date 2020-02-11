@@ -245,7 +245,7 @@ export namespace app {
             opt = { offset: markerWidth, stroke: true };
             // connection point for UML shapes lies on the root group containg all the shapes components
             const modelType = view.model.get('type');
-            if (modelType.indexOf('uml') === 0) opt.selector = 'root';
+            if (modelType.indexOf('app') === 0) opt.selector = 'root';
             // taking the border stroke-width into account
             if (modelType === 'standard.InscribedImage') opt.selector = 'border';
             return joint.connectionPoints.boundary.call(this, line, view, magnet, opt, type, linkView);
@@ -259,29 +259,60 @@ export namespace app {
                     type: 'app.State',
                     attrs: {
                         rect: { 'width': 200 },
-            
-                        '.uml-class-name-rect': { 'stroke': 'black', 'stroke-width': 2, 'fill': '#3498db' },
-                        '.uml-class-attrs-rect': { 'stroke': 'black', 'stroke-width': 2, 'fill': '#2980b9' },
-                        '.uml-class-methods-rect': { 'stroke': 'black', 'stroke-width': 2, 'fill': '#2980b9' },
-            
+                        '.uml-class-name-rect': {
+                            'top': 2,
+                            'fill': '#61549c',
+                            'stroke': '#f6f6f6',
+                            'stroke-width': 1,
+                            'rx': 8,
+                            'ry': 8
+                        },
+                        '.uml-class-attrs-rect': {
+                            'top': 2,
+                            'fill': '#61549c',
+                            'stroke': '#f6f6f6',
+                            'stroke-width': 1,
+                            'rx': 8,
+                            'ry': 8
+                        },
+                        '.uml-class-methods-rect': {
+                            'top': 2,
+                            'fill': '#61549c',
+                            'stroke': '#f6f6f6',
+                            'stroke-width': 1,
+                            'rx': 8,
+                            'ry': 8
+                        },            
                         '.uml-class-name-text': {
                             'ref': '.uml-class-name-rect',
                             'ref-y': .5,
                             'ref-x': .5,
                             'text-anchor': 'middle',
                             'y-alignment': 'middle',
-                            'font-weight': 'bold',
-                            'fill': 'black',
-                            'font-size': 12,
-                            'font-family': 'Times New Roman'
+                            'fill': '#f6f6f6',
+                            'font-size': 11,
+                            'font-weight': 'Normal',
+                            'font-family': 'Roboto Condensed'
                         },
                         '.uml-class-attrs-text': {
-                            'ref': '.uml-class-attrs-rect', 'ref-y': 5, 'ref-x': 5,
-                            'fill': 'black', 'font-size': 12, 'font-family': 'Times New Roman'
+                            'ref': '.uml-class-attrs-rect', 
+                            'ref-y': 0.5,
+                            'ref-x': 5,
+                            'y-alignment': 'middle',
+                            'fill': '#f6f6f6', 
+                            'font-size': 11, 
+                            'font-weight': 'Normal',
+                            'font-family': 'Roboto Condensed'
                         },
                         '.uml-class-methods-text': {
-                            'ref': '.uml-class-methods-rect', 'ref-y': 5, 'ref-x': 5,
-                            'fill': 'black', 'font-size': 12, 'font-family': 'Times New Roman'
+                            'ref': '.uml-class-methods-rect', 
+                            'ref-y': .5,
+                            'ref-x': 5,
+                            'y-alignment': 'middle',
+                            'fill': '#f6f6f6', 
+                            'font-size': 11, 
+                            'font-weight': 'Normal',
+                            'font-family': 'Roboto Condensed'
                         }
                     },          
                     name: [],
@@ -290,14 +321,20 @@ export namespace app {
                 }, Generic.prototype.defaults);
         }
 
-        markup = [
-            '<g class="rotatable">',
-            '<g class="scalable">',
-            '<rect class="uml-class-name-rect"/><rect class="uml-class-attrs-rect"/><rect class="uml-class-methods-rect"/>',
-            '</g>',
-            '<text class="uml-class-name-text"/><text class="uml-class-attrs-text"/><text class="uml-class-methods-text"/>',
-            '</g>'
-        ].join('');
+        markup =
+            `<g class="rotatable">
+                <g class="scalable">
+                    <rect class="uml-class-name-rect"/>
+                    <rect class="uml-class-attrs-rect"/>
+                    <rect class="uml-class-methods-rect"/>
+                    <rect class="uml-class-name-rect"/>
+                    <rect class="uml-class-attrs-rect"/>
+                    <rect class="uml-class-methods-rect"/>
+                </g>
+                <text class="uml-class-name-text"/>
+                <text class="uml-class-attrs-text"/>
+                <text class="uml-class-methods-text"/>
+            </g>`;
 
         initialize() {
             this.on('change:name change:attributes change:methods', () => {
