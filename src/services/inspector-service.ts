@@ -363,99 +363,26 @@ export class InspectorService {
             'standard.Rectangle': {
                 inputs: {
                     attrs: {
-                        label: {
-                            text: {
+                        properties: {
+                            status: {
                                 type: 'content-editable',
-                                label: 'Text',
-                                group: 'text',
+                                label: 'Status',
+                                group: 'properties',
                                 index: 1
                             },
-                            fontSize: {
-                                type: 'range',
-                                min: 5,
-                                max: 80,
-                                unit: 'px',
-                                label: 'Font size',
-                                group: 'text',
-                                when: { ne: { 'attrs/label/text': '' }},
+                            precondition: {
+                                type: 'content-editable',
+                                label: 'Pre Condition',
+                                group: 'properties',
                                 index: 2
-                            },
-                            fontFamily: {
-                                type: 'select-box',
-                                options: options.fontFamily,
-                                label: 'Font family',
-                                group: 'text',
-                                when: { ne: { 'attrs/label/text': '' }},
-                                index: 3
-                            },
-                            fontWeight: {
-                                type: 'select-box',
-                                options: options.fontWeight,
-                                label: 'Font thickness',
-                                group: 'text',
-                                when: { ne: { 'attrs/label/text': '' }},
-                                index: 4
-                            },
-                            fill: {
-                                type: 'color-palette',
-                                options: options.colorPalette,
-                                label: 'Fill',
-                                group: 'text',
-                                when: { ne: { 'attrs/label/text': '' }},
-                                index: 5
                             }
                         },
-                        body: {
-                            fill: {
-                                type: 'color-palette',
-                                options: options.colorPalette,
-                                label: 'Fill',
-                                group: 'presentation',
-                                index: 1
-                            },
-                            stroke: {
-                                type: 'color-palette',
-                                options: options.colorPalette,
-                                label: 'Outline',
-                                group: 'presentation',
-                                index: 2
-                            },
-                            strokeWidth: {
-                                type: 'range',
-                                min: 0,
-                                max: 30,
-                                step: 1,
-                                defaultValue: 1,
-                                unit: 'px',
-                                label: 'Outline thickness',
-                                group: 'presentation',
-                                when: { ne: { 'attrs/body/stroke': 'transparent' }},
-                                index: 3
-                            },
-                            strokeDasharray: {
-                                type: 'select-box',
-                                options: options.strokeStyle,
-                                label: 'Outline style',
-                                group: 'presentation',
-                                when: {
-                                    and: [
-                                        { ne: { 'attrs/body/stroke': 'transparent' }},
-                                        { ne: { 'attrs/body/strokeWidth': 0 }}
-                                    ]
-                                },
-                                index: 4
-                            }
-                        }
                     }
                 },
                 groups: {
-                    presentation: {
-                        label: 'Presentation',
+                    properties: {
+                        label: 'Properties',
                         index: 1
-                    },
-                    text: {
-                        label: 'Text',
-                        index: 2
                     }
                 }
             },
@@ -633,6 +560,98 @@ export class InspectorService {
                     }
                 }
             },
+            'app.State': {
+                inputs: {
+                    attrs: {
+                        '.uml-class-name-rect': {
+                            fill: {
+                                type: 'color-palette',
+                                options: options.colorPalette,
+                                label: 'Fill',
+                                group: 'name',
+                                index: 4
+                            },
+                            stroke: {
+                                type: 'color-palette',
+                                options: options.colorPalette,
+                                label: 'Outline',
+                                group: 'name',
+                                index: 5
+                            }
+                        },
+                        '.uml-class-attrs-rect': {
+                            fill: {
+                                type: 'color-palette',
+                                options: options.colorPalette,
+                                label: 'Fill',
+                                group: 'attributes',
+                                index: 4
+                            },
+                            stroke: {
+                                type: 'color-palette',
+                                options: options.colorPalette,
+                                label: 'Outline',
+                                group: 'attributes',
+                                index: 5
+                            }
+                        },
+                        '.uml-class-methods-rect': {
+                            fill: {
+                                type: 'color-palette',
+                                options: options.colorPalette,
+                                label: 'Fill',
+                                group: 'methods',
+                                index: 4
+                            },
+                            stroke: {
+                                type: 'color-palette',
+                                options: options.colorPalette,
+                                label: 'Outline',
+                                group: 'methods',
+                                index: 5
+                            }
+                        }
+                    },
+                    name: {
+                        type: 'text',
+                        group: 'name',
+                        index: 1,
+                        label: 'Class name'
+                    },
+                    attributes: {
+                        type: 'list',
+                        item: {
+                            type: 'text'
+                        },
+                        group: 'attributes',
+                        index: 1,
+                        label: 'Attributes'
+                    },
+                    methods: {
+                        type: 'list',
+                        item: {
+                            type: 'text'
+                        },
+                        group: 'methods',
+                        index: 1,
+                        label: 'Methods'
+                    }
+                },
+                groups: {
+                    name: {
+                        label: 'Class name',
+                        index: 1
+                    },
+                    attributes: {
+                        label: 'Attributes',
+                        index: 2
+                    },
+                    methods: {
+                        label: 'Methods',
+                        index: 3
+                    }
+                }
+            }
         };
     }
 }

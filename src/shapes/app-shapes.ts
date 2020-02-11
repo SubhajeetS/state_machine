@@ -1,6 +1,7 @@
 import * as joint from '../../vendor/rappid';
 import { memoize } from 'lodash';
 
+const { Generic } = joint.shapes.basic;
 export namespace app {
 
     export class CircularModel extends joint.shapes.standard.Ellipse {
@@ -250,6 +251,93 @@ export namespace app {
             return joint.connectionPoints.boundary.call(this, line, view, magnet, opt, type, linkView);
         }
     }
+
+    export class State extends Generic {
+        defaults() {
+            return joint.util.defaultsDeep(
+                {
+                    type: 'app.State',
+                    attrs: {
+                        rect: { 'width': 200 },
+            
+                        '.uml-class-name-rect': { 'stroke': 'black', 'stroke-width': 2, 'fill': '#3498db' },
+                        '.uml-class-attrs-rect': { 'stroke': 'black', 'stroke-width': 2, 'fill': '#2980b9' },
+                        '.uml-class-methods-rect': { 'stroke': 'black', 'stroke-width': 2, 'fill': '#2980b9' },
+            
+                        '.uml-class-name-text': {
+                            'ref': '.uml-class-name-rect',
+                            'ref-y': .5,
+                            'ref-x': .5,
+                            'text-anchor': 'middle',
+                            'y-alignment': 'middle',
+                            'font-weight': 'bold',
+                            'fill': 'black',
+                            'font-size': 12,
+                            'font-family': 'Times New Roman'
+                        },
+                        '.uml-class-attrs-text': {
+                            'ref': '.uml-class-attrs-rect', 'ref-y': 5, 'ref-x': 5,
+                            'fill': 'black', 'font-size': 12, 'font-family': 'Times New Roman'
+                        },
+                        '.uml-class-methods-text': {
+                            'ref': '.uml-class-methods-rect', 'ref-y': 5, 'ref-x': 5,
+                            'fill': 'black', 'font-size': 12, 'font-family': 'Times New Roman'
+                        }
+                    },          
+                    name: [],
+                    attributes: [],
+                    methods: []
+                }, Generic.prototype.defaults);
+        }
+
+        markup = [
+            '<g class="rotatable">',
+            '<g class="scalable">',
+            '<rect class="uml-class-name-rect"/><rect class="uml-class-attrs-rect"/><rect class="uml-class-methods-rect"/>',
+            '</g>',
+            '<text class="uml-class-name-text"/><text class="uml-class-attrs-text"/><text class="uml-class-methods-text"/>',
+            '</g>'
+        ].join('');
+
+        initialize() {
+            this.on('change:name change:attributes change:methods', () => {
+                this.updateRectangles();
+                this.trigger('uml-update');
+            }, this);
+
+            this.updateRectangles();
+
+            Generic.prototype.initialize.apply(this, arguments);
+        }
+
+        getClassName() {
+            return this.get('name');
+        }
+
+        updateRectangles() {
+            var attrs = this.get('attrs');
+
+            var rects = [
+                { type: 'name', text: this.getClassName() },
+                { type: 'attrs', text: this.get('attributes') },
+                { type: 'methods', text: this.get('methods') }
+            ];
+
+            var offsetY = 0;
+
+            rects.forEach(function(rect) {
+
+                var lines = Array.isArray(rect.text) ? rect.text : [rect.text];
+                var rectHeight = lines.length * 20 + 20;
+
+                attrs['.uml-class-' + rect.type + '-text'].text = lines.join('\n');
+                attrs['.uml-class-' + rect.type + '-rect'].height = rectHeight;
+                attrs['.uml-class-' + rect.type + '-rect'].transform = 'translate(0,' + offsetY + ')';
+
+                offsetY += rectHeight;
+            });
+        }
+    }
 }
 
 export const NavigatorElementView = joint.dia.ElementView.extend({
@@ -270,15 +358,15 @@ export const NavigatorElementView = joint.dia.ElementView.extend({
         angle: ['ROTATE']
     },
 
-    render: function() {
-        const { fragment, selectors: { body }} = joint.util.parseDOMJSON(this.markup);
+    render: function () {
+        const { fragment, selectors: { body } } = joint.util.parseDOMJSON(this.markup);
         this.body = body;
         this.el.appendChild(fragment);
         this.updateNodesAttributes();
         this.updateTransformation();
     },
 
-    updateNodesAttributes: function() {
+    updateNodesAttributes: function () {
         const { width, height } = this.model.get('size');
         this.body.setAttribute('width', width);
         this.body.setAttribute('height', height);
