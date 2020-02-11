@@ -156,9 +156,6 @@ export class StencilService {
                 },
                 {
                     type: 'app.State',
-                    name: 'State',
-                    attributes: ['+attr1'],
-                    methods: ['-setAttr1()'],
                     size: {
                         width: 150,
                         height: 100

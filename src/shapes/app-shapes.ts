@@ -259,120 +259,84 @@ export namespace app {
                     type: 'app.State',
                     attrs: {
                         rect: { 'width': 200 },
-                        '.uml-class-name-rect': {
-                            'top': 2,
-                            'fill': '#61549c',
-                            'stroke': '#f6f6f6',
-                            'stroke-width': 1,
-                            'rx': 8,
-                            'ry': 8
+                        '.state-rect': {
+                            'width': 200, 
+                            'height': 150, 
+                            'rx': 10, 
+                            'ry': 10,
+                            'fill': '#fff', 
+                            'stroke': '#000000', 
+                            'stroke-width': 2
                         },
-                        '.uml-class-attrs-rect': {
-                            'top': 2,
-                            'fill': '#61549c',
-                            'stroke': '#f6f6f6',
-                            'stroke-width': 1,
-                            'rx': 8,
-                            'ry': 8
+                        '.state-precondition': {
+                            'ref': '.state-rect',
+                            'ref-x': -15, 
+                            'ref-y': -50, 
+                            'fill': '#000000',
+                            'transform': `scale(0.2) matrix(-1, 0, 0, 1, 260, 0)`,
+                            'display': 'none'
                         },
-                        '.uml-class-methods-rect': {
-                            'top': 2,
-                            'fill': '#61549c',
-                            'stroke': '#f6f6f6',
-                            'stroke-width': 1,
-                            'rx': 8,
-                            'ry': 8
-                        },            
-                        '.uml-class-name-text': {
-                            'ref': '.uml-class-name-rect',
-                            'ref-y': .5,
-                            'ref-x': .5,
+                        '.state-val-text': {
+                            'ref': '.state-rect',
+                            'ref-x': .5, 
+                            'ref-y': .3, 
                             'text-anchor': 'middle',
-                            'y-alignment': 'middle',
-                            'fill': '#f6f6f6',
-                            'font-size': 11,
-                            'font-weight': 'Normal',
-                            'font-family': 'Roboto Condensed'
+                            'fill': '#000000', 
+                            'font-family': 'Courier New', 
+                            'font-size': 14
                         },
-                        '.uml-class-attrs-text': {
-                            'ref': '.uml-class-attrs-rect', 
-                            'ref-y': 0.5,
-                            'ref-x': 5,
-                            'y-alignment': 'middle',
-                            'fill': '#f6f6f6', 
-                            'font-size': 11, 
-                            'font-weight': 'Normal',
-                            'font-family': 'Roboto Condensed'
+                        '.state-precondition-text': {
+                            'ref': '.state-precondition',
+                            'ref-x': 40, 
+                            'ref-y': 10, 
+                            'text-anchor': 'middle',
+                            'fill': '#000000', 
+                            'font-weight': 'bold',
+                            'font-family': 'Courier New', 
+                            'font-size': 14
                         },
-                        '.uml-class-methods-text': {
-                            'ref': '.uml-class-methods-rect', 
-                            'ref-y': .5,
-                            'ref-x': 5,
-                            'y-alignment': 'middle',
-                            'fill': '#f6f6f6', 
-                            'font-size': 11, 
-                            'font-weight': 'Normal',
-                            'font-family': 'Roboto Condensed'
-                        }
-                    },          
-                    name: [],
-                    attributes: [],
-                    methods: []
+                    },
+                    state: '',
+                    precondition: ''
                 }, Generic.prototype.defaults);
         }
 
         markup =
             `<g class="rotatable">
                 <g class="scalable">
-                    <rect class="uml-class-name-rect"/>
-                    <rect class="uml-class-attrs-rect"/>
-                    <rect class="uml-class-methods-rect"/>
-                    <rect class="uml-class-name-rect"/>
-                    <rect class="uml-class-attrs-rect"/>
-                    <rect class="uml-class-methods-rect"/>
+                    <rect class="state-rect"/>
                 </g>
-                <text class="uml-class-name-text"/>
-                <text class="uml-class-attrs-text"/>
-                <text class="uml-class-methods-text"/>
-            </g>`;
+             </g>
+            <path 
+                d="m 200,200 5,0 c 6,0 10,0 14,-1 4,-1 8,-4 11,-8 3,-4 4,-8 5,-13 1,-5 1,-14 1,-26 0,-9 0,-15 1,-20 1,-5 3,-10 6,-13 3,-3 7,-5 13,-5 l 0,-16 c -6,0 -10,-2 -13,-5 -3,-3 -5,-8 -6,-13 -1,-5 -1,-11 -1,-20 0,-12 0,-21 -1,-26 -1,-5 -2,-9 -5,-13 -3,-4 -7,-7 -11,-8 -4,-1 -8,-1 -14,-1 l -5,0 0,15 3,0 c 7,0 11,1 13,3 3,3 4,4 4,7 l 0,25 c 0,15 2,25 5,31 3,6 9,10 15,13 -6,3 -12,7 -15,13 -3,6 -5,16 -5,31 l 0,25 c 0,3 -1,4 -4,7 -2,2 -6,3 -13,3 l -3,0 0,15 z" 
+                class= "state-precondition"
+            />
+            <text class="state-val-text"/>
+            <text class="state-precondition-text"/>`;
 
         initialize() {
-            this.on('change:name change:attributes change:methods', () => {
-                this.updateRectangles();
-                this.trigger('uml-update');
-            }, this);
-
-            this.updateRectangles();
-
+            this.on({
+                'change:state': this.updateState,
+                'change:precondition': this.updatePrecondtion,
+            });
+            this.updateState();
+            this.updatePrecondtion();
             Generic.prototype.initialize.apply(this, arguments);
         }
 
-        getClassName() {
-            return this.get('name');
+        updateState() {
+            this.attr('.state-val-text/text', this.get('state'));
         }
 
-        updateRectangles() {
-            var attrs = this.get('attrs');
-
-            var rects = [
-                { type: 'name', text: this.getClassName() },
-                { type: 'attrs', text: this.get('attributes') },
-                { type: 'methods', text: this.get('methods') }
-            ];
-
-            var offsetY = 0;
-
-            rects.forEach(function(rect) {
-
-                var lines = Array.isArray(rect.text) ? rect.text : [rect.text];
-                var rectHeight = lines.length * 20 + 20;
-
-                attrs['.uml-class-' + rect.type + '-text'].text = lines.join('\n');
-                attrs['.uml-class-' + rect.type + '-rect'].height = rectHeight;
-                attrs['.uml-class-' + rect.type + '-rect'].transform = 'translate(0,' + offsetY + ')';
-
-                offsetY += rectHeight;
-            });
+        updatePrecondtion() {
+            const precondition = this.get('precondition').trim();
+            this.attr('.state-precondition-text/text', precondition);
+            
+            if(!precondition){
+                this.attr('.state-precondition/display', 'none');
+            } else {
+                this.attr('.state-precondition/display', 'inline');
+            }
         }
     }
 }

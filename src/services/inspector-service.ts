@@ -562,93 +562,23 @@ export class InspectorService {
             },
             'app.State': {
                 inputs: {
-                    attrs: {
-                        '.uml-class-name-rect': {
-                            fill: {
-                                type: 'color-palette',
-                                options: options.colorPalette,
-                                label: 'Fill',
-                                group: 'name',
-                                index: 4
-                            },
-                            stroke: {
-                                type: 'color-palette',
-                                options: options.colorPalette,
-                                label: 'Outline',
-                                group: 'name',
-                                index: 5
-                            }
-                        },
-                        '.uml-class-attrs-rect': {
-                            fill: {
-                                type: 'color-palette',
-                                options: options.colorPalette,
-                                label: 'Fill',
-                                group: 'attributes',
-                                index: 4
-                            },
-                            stroke: {
-                                type: 'color-palette',
-                                options: options.colorPalette,
-                                label: 'Outline',
-                                group: 'attributes',
-                                index: 5
-                            }
-                        },
-                        '.uml-class-methods-rect': {
-                            fill: {
-                                type: 'color-palette',
-                                options: options.colorPalette,
-                                label: 'Fill',
-                                group: 'methods',
-                                index: 4
-                            },
-                            stroke: {
-                                type: 'color-palette',
-                                options: options.colorPalette,
-                                label: 'Outline',
-                                group: 'methods',
-                                index: 5
-                            }
-                        }
-                    },
-                    name: {
+                    state: {
                         type: 'text',
-                        group: 'name',
+                        group: 'properties',
                         index: 1,
-                        label: 'Class name'
+                        label: 'State'
                     },
-                    attributes: {
-                        type: 'list',
-                        item: {
-                            type: 'text'
-                        },
-                        group: 'attributes',
-                        index: 1,
-                        label: 'Attributes'
-                    },
-                    methods: {
-                        type: 'list',
-                        item: {
-                            type: 'text'
-                        },
-                        group: 'methods',
-                        index: 1,
-                        label: 'Methods'
+                    precondition: {
+                        type: 'text',
+                        group: 'properties',
+                        index: 2,
+                        label: 'Pre-Condition'
                     }
                 },
                 groups: {
-                    name: {
-                        label: 'Class name',
+                    properties: {
+                        label: 'Properties',
                         index: 1
-                    },
-                    attributes: {
-                        label: 'Attributes',
-                        index: 2
-                    },
-                    methods: {
-                        label: 'Methods',
-                        index: 3
                     }
                 }
             }
