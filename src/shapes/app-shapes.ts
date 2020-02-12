@@ -70,7 +70,7 @@ export namespace workflow {
             const precondition = this.get('precondition');
             if(precondition){
                 this.labels([
-                    { "attrs": { "text": { "text":  precondition } } , position: 0.5 }
+                    { "attrs": { "text": { "text":  precondition } } , position: 50 }
                 ]);
             } else {
                 this.labels([]);
