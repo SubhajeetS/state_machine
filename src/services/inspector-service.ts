@@ -411,12 +411,6 @@ export class InspectorService {
                         index: 1,
                         label: 'State'
                     },
-                    precondition: {
-                        type: 'text',
-                        group: 'properties',
-                        index: 2,
-                        label: 'Pre-Condition'
-                    },
                     attrs: {
                         '.state-rect': {
                             fill: {

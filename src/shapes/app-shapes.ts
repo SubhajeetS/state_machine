@@ -198,38 +198,16 @@ export namespace workflow {
                     <rect class="state-rect"/>
                 </g>
                 <text class="state-val-text"/>
-             </g>
-             <g>
-                <path 
-                    d="m 200,200 5,0 c 6,0 10,0 14,-1 4,-1 8,-4 11,-8 3,-4 4,-8 5,-13 1,-5 1,-14 1,-26 0,-9 0,-15 1,-20 1,-5 3,-10 6,-13 3,-3 7,-5 13,-5 l 0,-16 c -6,0 -10,-2 -13,-5 -3,-3 -5,-8 -6,-13 -1,-5 -1,-11 -1,-20 0,-12 0,-21 -1,-26 -1,-5 -2,-9 -5,-13 -3,-4 -7,-7 -11,-8 -4,-1 -8,-1 -14,-1 l -5,0 0,15 3,0 c 7,0 11,1 13,3 3,3 4,4 4,7 l 0,25 c 0,15 2,25 5,31 3,6 9,10 15,13 -6,3 -12,7 -15,13 -3,6 -5,16 -5,31 l 0,25 c 0,3 -1,4 -4,7 -2,2 -6,3 -13,3 l -3,0 0,15 z" 
-                    class= "state-precondition"
-                />
-                <text class="state-precondition-text"/>
-            </g>`;
+             </g>`;
 
         initialize() {
-            this.on({
-                'change:state': this.updateState,
-                'change:precondition': this.updatePrecondtion,
-            });
+            this.on('change:state', this.updateState);
             this.updateState();
-            this.updatePrecondtion();
             Generic.prototype.initialize.apply(this, arguments);
         }
 
         updateState() {
             this.attr('.state-val-text/text', this.get('state'));
-        }
-
-        updatePrecondtion() {
-            const precondition = this.get('precondition').trim();
-            this.attr('.state-precondition-text/text', precondition);
-            
-            if(!precondition){
-                this.attr('.state-precondition/display', 'none');
-            } else {
-                this.attr('.state-precondition/display', 'inline');
-            }
         }
     }
 }
