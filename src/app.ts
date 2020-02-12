@@ -85,8 +85,8 @@ class App {
             drawGrid: true,
             model: graph,
             cellViewNamespace: appShapes,
-            defaultLink: <joint.dia.Link>new appShapes.app.Link(),
-            defaultConnectionPoint: appShapes.app.Link.connectionPoint,
+            defaultLink: <joint.dia.Link>new appShapes.workflow.Link(),
+            defaultConnectionPoint: appShapes.workflow.Link.connectionPoint,
             interactive: { linkMove: false },
             async: true,
             sorting: joint.dia.Paper.sorting.APPROX
@@ -338,7 +338,7 @@ class App {
             new joint.ui.Lightbox({
                 image: dataURL,
                 downloadable: true,
-                fileName: 'Rappid'
+                fileName: 'Workflow'
             }).open();
             this.paper.showTools();
         }, { padding: 10 });

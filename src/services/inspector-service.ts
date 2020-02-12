@@ -1,16 +1,3 @@
-/*! Rappid v3.1.1 - HTML5 Diagramming Framework - TRIAL VERSION
-
-Copyright (c) 2015 client IO
-
- 2020-02-03 
-
-
-This Source Code Form is subject to the terms of the Rappid Trial License
-, v. 2.0. If a copy of the Rappid License was not distributed with this
-file, You can obtain one at http://jointjs.com/license/rappid_v2.txt
- or from the Rappid archive as was distributed by client IO. See the LICENSE file.*/
-
-
 import * as joint from '../../vendor/rappid';
 
 export class InspectorService {
@@ -179,7 +166,7 @@ export class InspectorService {
 
         return <{ [index: string]: any }>{
 
-            'app.Link': {
+            'workflow.Link': {
                 inputs: {
                     attrs: {
                         line: {
@@ -360,33 +347,7 @@ export class InspectorService {
                     }
                 }
             },
-            'standard.Rectangle': {
-                inputs: {
-                    attrs: {
-                        properties: {
-                            status: {
-                                type: 'content-editable',
-                                label: 'Status',
-                                group: 'properties',
-                                index: 1
-                            },
-                            precondition: {
-                                type: 'content-editable',
-                                label: 'Pre Condition',
-                                group: 'properties',
-                                index: 2
-                            }
-                        },
-                    }
-                },
-                groups: {
-                    properties: {
-                        label: 'Properties',
-                        index: 1
-                    }
-                }
-            },
-            'standard.Polygon': {
+            'workflow.Branch': {
                 inputs: {
                     attrs: {
                         label: {
@@ -405,22 +366,6 @@ export class InspectorService {
                                 group: 'text',
                                 when: { ne: { 'attrs/label/text': '' }},
                                 index: 2
-                            },
-                            fontFamily: {
-                                type: 'select-box',
-                                options: options.fontFamily,
-                                label: 'Font family',
-                                group: 'text',
-                                when: { ne: { 'attrs/label/text': '' }},
-                                index: 3
-                            },
-                            fontWeight: {
-                                type: 'select-box',
-                                options: options.fontWeight,
-                                label: 'Font thickness',
-                                group: 'text',
-                                when: { ne: { 'attrs/label/text': '' }},
-                                index: 4
                             },
                             fill: {
                                 type: 'color-palette',
@@ -458,19 +403,6 @@ export class InspectorService {
                                 when: { ne: { 'attrs/body/stroke': 'transparent' }},
                                 index: 3
                             },
-                            strokeDasharray: {
-                                type: 'select-box',
-                                options: options.strokeStyle,
-                                label: 'Outline style',
-                                group: 'presentation',
-                                when: {
-                                    and: [
-                                        { ne: { 'attrs/body/stroke': 'transparent' }},
-                                        { ne: { 'attrs/body/strokeWidth': 0 }}
-                                    ]
-                                },
-                                index: 4
-                            }
                         }
                     }
                 },
@@ -485,7 +417,7 @@ export class InspectorService {
                     }
                 }
             },
-            'fsa.StartState': {
+            'workflow.StartState': {
                 inputs: {
                     attrs: {
                         circle: {
@@ -506,7 +438,7 @@ export class InspectorService {
                     }
                 }
             },
-            'fsa.EndState': {
+            'workflow.EndState': {
                 inputs: {
                     attrs: {
                         '.outer': {
@@ -560,7 +492,7 @@ export class InspectorService {
                     }
                 }
             },
-            'app.State': {
+            'workflow.State': {
                 inputs: {
                     state: {
                         type: 'text',
@@ -573,13 +505,70 @@ export class InspectorService {
                         group: 'properties',
                         index: 2,
                         label: 'Pre-Condition'
-                    }
+                    },
+                    attrs: {
+                        '.state-rect': {
+                            fill: {
+                                type: 'color-palette',
+                                options: options.colorPalette,
+                                label: 'Fill',
+                                group: 'presentation',
+                                index: 1
+                            },
+                            stroke: {
+                                type: 'color-palette',
+                                options: options.colorPalette,
+                                label: 'Outline',
+                                group: 'presentation',
+                                index: 2
+                            },
+                            'stroke-width': {
+                                type: 'range',
+                                min: 0,
+                                max: 30,
+                                step: 1,
+                                defaultValue: 1,
+                                unit: 'px',
+                                label: 'Outline thickness',
+                                group: 'presentation',
+                                when: { ne: { 'attrs/.uml-state-body/stroke': 'transparent' }},
+                                index: 3
+                            },
+                            'stroke-dasharray': {
+                                type: 'select-box',
+                                options: options.strokeStyle,
+                                label: 'Outline style',
+                                group: 'presentation',
+                                when: {
+                                    and: [
+                                        { ne: { 'attrs/.uml-state-body/stroke': 'transparent' }},
+                                        { ne: { 'attrs/.uml-state-body/stroke-width': 0 }}
+                                    ]
+                                },
+                                index: 4
+                            }
+                        },
+                        '.state-val-text': {
+                            fill: {
+                                type: 'color-palette',
+                                options: options.colorPalette,
+                                label: 'Text Color',
+                                group: 'presentation',
+                                when: { ne: { 'state': '' }},
+                                index: 2
+                            }
+                        }
+                    }  
                 },
                 groups: {
                     properties: {
                         label: 'Properties',
                         index: 1
-                    }
+                    },
+                    presentation: {
+                        label: 'Presentation',
+                        index: 2
+                    },
                 }
             }
         };

@@ -47,61 +47,7 @@ export class StencilService {
         return {
             stateDiagram: [
                 {
-                    type: 'standard.Rectangle',
-                    size: { width: 5, height: 3 },
-                    attrs: {
-                        root: {
-                            dataTooltip: 'State',
-                            dataTooltipPosition: 'left',
-                            dataTooltipPositionSelector: '.joint-stencil'
-                        },
-                        body: {
-                            rx: 2,
-                            ry: 2,
-                            width: 50,
-                            height: 30,
-                            fill: 'transparent',
-                            stroke: '#31d0c6',
-                            strokeWidth: 2,
-                            strokeDasharray: '0'
-                        },
-                        label: {
-                            fill: '#000',
-                            fontFamily: 'Roboto Condensed',
-                            fontWeight: 'Normal',
-                            fontSize: 11,
-                            strokeWidth: 0
-                        },
-                        properties: {}
-                    }
-                },
-                {
-                    type: 'standard.Polygon',
-                    size: { width: 2, height: 1 },
-                    attrs: {
-                        root: {
-                            dataTooltip: 'Branch',
-                            dataTooltipPosition: 'left',
-                            dataTooltipPositionSelector: '.joint-stencil'
-                        },
-                        body: {
-                            refPoints: '50,0 100,50 50,100 0,50',
-                            fill: 'transparent',
-                            stroke: '#31d0c6',
-                            strokeWidth: 2,
-                            strokeDasharray: '0'
-                        },
-                        label: {
-                            fill: '#c6c7e2',
-                            fontFamily: 'Roboto Condensed',
-                            fontWeight: 'Normal',
-                            fontSize: 11,
-                            strokeWidth: 0
-                        }
-                    }
-                },
-                {
-                    type: 'fsa.StartState',
+                    type: 'workflow.StartState',
                     preserveAspectRatio: true,
                     attrs: {
                         root: {
@@ -110,23 +56,15 @@ export class StencilService {
                             dataTooltipPositionSelector: '.joint-stencil'
                         },
                         circle: {
-                            width: 50,
-                            height: 30,
+                            width: 2,
+                            height: 2,
                             fill: '#61549c',
                             'stroke-width': 0
                         },
-                        text: {
-                            text: 'startState',
-                            fill: '#c6c7e2',
-                            'font-family': 'Roboto Condensed',
-                            'font-weight': 'Normal',
-                            'font-size': 11,
-                            'stroke-width': 0
-                        }
                     }
                 },
                 {
-                    type: 'fsa.EndState',
+                    type: 'workflow.EndState',
                     preserveAspectRatio: true,
                     attrs: {
                         root: {
@@ -143,19 +81,22 @@ export class StencilService {
                             stroke: '#61549c',
                             'stroke-width': 2,
                             'stroke-dasharray': '0'
-                        },
-                        text: {
-                            text: 'endState',
-                            fill: '#c6c7e2',
-                            'font-family': 'Roboto Condensed',
-                            'font-weight': 'Normal',
-                            'font-size': 11,
-                            'stroke-width': 0
                         }
                     }
                 },
                 {
-                    type: 'app.State',
+                    type: 'workflow.Branch',
+                    size: { width: 2, height: 1 },
+                    attrs: {
+                        root: {
+                            dataTooltip: 'Branch',
+                            dataTooltipPosition: 'left',
+                            dataTooltipPositionSelector: '.joint-stencil'
+                        }
+                    }
+                },
+                {
+                    type: 'workflow.State',
                     size: {
                         width: 150,
                         height: 100

@@ -2,193 +2,12 @@ import * as joint from '../../vendor/rappid';
 import { memoize } from 'lodash';
 
 const { Generic } = joint.shapes.basic;
-export namespace app {
-
-    export class CircularModel extends joint.shapes.standard.Ellipse {
-
-        portLabelMarkup = [{
-            tagName: 'text',
-            selector: 'portLabel'
-        }];
-
-        defaults() {
-
-            return joint.util.defaultsDeep({
-                type: 'app.CircularModel',
-                attrs: {
-                    root: {
-                        magnet: false
-                    }
-                },
-                ports: {
-                    groups: {
-                        'in': {
-                            markup: [{
-                                tagName: 'circle',
-                                selector: 'portBody',
-                                attributes: {
-                                    'r': 10
-                                }
-                            }],
-                            attrs: {
-                                portBody: {
-                                    magnet: true,
-                                    fill: '#61549c',
-                                    strokeWidth: 0
-                                },
-                                portLabel: {
-                                    fontSize: 11,
-                                    fill: '#61549c',
-                                    fontWeight: 800
-                                }
-                            },
-                            position: {
-                                name: 'ellipse',
-                                args: {
-                                    startAngle: 0,
-                                    step: 30
-                                }
-                            },
-                            label: {
-                                position: {
-                                    name: 'radial',
-                                    args: null
-                                }
-                            }
-                        },
-                        'out': {
-                            markup: [{
-                                tagName: 'circle',
-                                selector: 'portBody',
-                                attributes: {
-                                    'r': 10
-                                }
-                            }],
-                            attrs: {
-                                portBody: {
-                                    magnet: true,
-                                    fill: '#61549c',
-                                    strokeWidth: 0
-                                },
-                                portLabel: {
-                                    fontSize: 11,
-                                    fill: '#61549c',
-                                    fontWeight: 800
-                                }
-                            },
-                            position: {
-                                name: 'ellipse',
-                                args: {
-                                    startAngle: 180,
-                                    step: 30
-                                }
-                            },
-                            label: {
-                                position: {
-                                    name: 'radial',
-                                    args: null
-                                }
-                            }
-                        }
-                    }
-                }
-            }, joint.shapes.standard.Ellipse.prototype.defaults);
-        }
-    }
-
-    export class RectangularModel extends joint.shapes.standard.Rectangle {
-
-        portLabelMarkup = [{
-            tagName: 'text',
-            selector: 'portLabel'
-        }];
-
-        defaults() {
-
-            return joint.util.defaultsDeep({
-                type: 'app.RectangularModel',
-                attrs: {
-                    root: {
-                        magnet: false
-                    }
-                },
-                ports: {
-                    groups: {
-                        'in': {
-                            markup: [{
-                                tagName: 'circle',
-                                selector: 'portBody',
-                                attributes: {
-                                    'r': 10
-                                }
-                            }],
-                            attrs: {
-                                portBody: {
-                                    magnet: true,
-                                    fill: '#61549c',
-                                    strokeWidth: 0
-                                },
-                                portLabel: {
-                                    fontSize: 11,
-                                    fill: '#61549c',
-                                    fontWeight: 800
-                                }
-                            },
-                            position: {
-                                name: 'left'
-                            },
-                            label: {
-                                position: {
-                                    name: 'left',
-                                    args: {
-                                        y: 0
-                                    }
-                                }
-                            }
-                        },
-                        'out': {
-                            markup: [{
-                                tagName: 'circle',
-                                selector: 'portBody',
-                                attributes: {
-                                    'r': 10
-                                }
-                            }],
-                            position: {
-                                name: 'right'
-                            },
-                            attrs: {
-                                portBody: {
-                                    magnet: true,
-                                    fill: '#61549c',
-                                    strokeWidth: 0
-                                },
-                                portLabel: {
-                                    fontSize: 11,
-                                    fill: '#61549c',
-                                    fontWeight: 800
-                                }
-                            },
-                            label: {
-                                position: {
-                                    name: 'right',
-                                    args: {
-                                        y: 0
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }, joint.shapes.standard.Rectangle.prototype.defaults);
-        }
-    }
-
+export namespace workflow {
     export class Link extends joint.shapes.standard.Link {
 
         defaults() {
             return joint.util.defaultsDeep({
-                type: 'app.Link',
+                type: 'workflow.Link',
                 router: {
                     name: 'normal'
                 },
@@ -245,18 +64,65 @@ export namespace app {
             opt = { offset: markerWidth, stroke: true };
             // connection point for UML shapes lies on the root group containg all the shapes components
             const modelType = view.model.get('type');
-            if (modelType.indexOf('app') === 0) opt.selector = 'root';
+            if (modelType.indexOf('app') === 0) opt.selector = '.state-rect-container';
             // taking the border stroke-width into account
             if (modelType === 'standard.InscribedImage') opt.selector = 'border';
             return joint.connectionPoints.boundary.call(this, line, view, magnet, opt, type, linkView);
         }
     }
 
+    export class StartState extends joint.shapes.fsa.StartState {
+        defaults() {
+            return joint.util.defaultsDeep({
+                type: 'workflow.StartState',
+                attrs: {
+                    body: {
+                        fill: '#fff', 
+                        stroke: '#000000',
+                        strokeWidth: 2,
+                        strokeDasharray: '0'
+                    }
+                }
+            }, joint.shapes.fsa.StartState.prototype.defaults);
+        }
+    }
+
+    export class EndState extends joint.shapes.fsa.EndState {
+        defaults() {
+            return joint.util.defaultsDeep({
+                type: 'workflow.EndState'
+            }, joint.shapes.fsa.EndState.prototype.defaults);
+        }
+    }
+    export class Branch extends joint.shapes.standard.Polygon {
+        defaults() {
+
+            return joint.util.defaultsDeep({
+                type: 'workflow.Branch',
+                attrs: {
+                    body: {
+                        refPoints: '50,0 100,50 50,100 0,50',
+                        fill: '#fff', 
+                        stroke: '#000000',
+                        strokeWidth: 2,
+                        strokeDasharray: '0'
+                    },
+                    label: {
+                        fill: '#c6c7e2',
+                        fontFamily: 'Roboto Condensed',
+                        fontWeight: 'Normal',
+                        fontSize: 11,
+                        strokeWidth: 0
+                    }
+                }
+            }, joint.shapes.standard.Polygon.prototype.defaults);
+        }
+    }
     export class State extends Generic {
         defaults() {
             return joint.util.defaultsDeep(
                 {
-                    type: 'app.State',
+                    type: 'workflow.State',
                     attrs: {
                         rect: { 'width': 200 },
                         '.state-rect': {
@@ -287,9 +153,7 @@ export namespace app {
                         },
                         '.state-precondition-text': {
                             'ref': '.state-precondition',
-                            'ref-x': 40, 
                             'ref-y': 10, 
-                            'text-anchor': 'middle',
                             'fill': '#000000', 
                             'font-weight': 'bold',
                             'font-family': 'Courier New', 
@@ -302,17 +166,19 @@ export namespace app {
         }
 
         markup =
-            `<g class="rotatable">
+            `<g class="rotatable state-rect-container">
                 <g class="scalable">
                     <rect class="state-rect"/>
                 </g>
+                <text class="state-val-text"/>
              </g>
-            <path 
-                d="m 200,200 5,0 c 6,0 10,0 14,-1 4,-1 8,-4 11,-8 3,-4 4,-8 5,-13 1,-5 1,-14 1,-26 0,-9 0,-15 1,-20 1,-5 3,-10 6,-13 3,-3 7,-5 13,-5 l 0,-16 c -6,0 -10,-2 -13,-5 -3,-3 -5,-8 -6,-13 -1,-5 -1,-11 -1,-20 0,-12 0,-21 -1,-26 -1,-5 -2,-9 -5,-13 -3,-4 -7,-7 -11,-8 -4,-1 -8,-1 -14,-1 l -5,0 0,15 3,0 c 7,0 11,1 13,3 3,3 4,4 4,7 l 0,25 c 0,15 2,25 5,31 3,6 9,10 15,13 -6,3 -12,7 -15,13 -3,6 -5,16 -5,31 l 0,25 c 0,3 -1,4 -4,7 -2,2 -6,3 -13,3 l -3,0 0,15 z" 
-                class= "state-precondition"
-            />
-            <text class="state-val-text"/>
-            <text class="state-precondition-text"/>`;
+             <g>
+                <path 
+                    d="m 200,200 5,0 c 6,0 10,0 14,-1 4,-1 8,-4 11,-8 3,-4 4,-8 5,-13 1,-5 1,-14 1,-26 0,-9 0,-15 1,-20 1,-5 3,-10 6,-13 3,-3 7,-5 13,-5 l 0,-16 c -6,0 -10,-2 -13,-5 -3,-3 -5,-8 -6,-13 -1,-5 -1,-11 -1,-20 0,-12 0,-21 -1,-26 -1,-5 -2,-9 -5,-13 -3,-4 -7,-7 -11,-8 -4,-1 -8,-1 -14,-1 l -5,0 0,15 3,0 c 7,0 11,1 13,3 3,3 4,4 4,7 l 0,25 c 0,15 2,25 5,31 3,6 9,10 15,13 -6,3 -12,7 -15,13 -3,6 -5,16 -5,31 l 0,25 c 0,3 -1,4 -4,7 -2,2 -6,3 -13,3 l -3,0 0,15 z" 
+                    class= "state-precondition"
+                />
+                <text class="state-precondition-text"/>
+            </g>`;
 
         initialize() {
             this.on({
