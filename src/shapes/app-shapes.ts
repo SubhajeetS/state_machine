@@ -32,8 +32,12 @@ export namespace workflow {
                             stroke: 'none'
                         }
                     }
-                }
-            }, joint.shapes.standard.Link.prototype.defaults);
+                },
+                transitionType: 'manual',
+                priority: 1,
+                precondition: ''
+            }, 
+            joint.shapes.standard.Link.prototype.defaults);
         }
 
         defaultLabel = {
@@ -51,11 +55,28 @@ export namespace workflow {
         };
 
         labelMarkup = 
-        `<path 
-            d="m 200,200 5,0 c 6,0 10,0 14,-1 4,-1 8,-4 11,-8 3,-4 4,-8 5,-13 1,-5 1,-14 1,-26 0,-9 0,-15 1,-20 1,-5 3,-10 6,-13 3,-3 7,-5 13,-5 l 0,-16 c -6,0 -10,-2 -13,-5 -3,-3 -5,-8 -6,-13 -1,-5 -1,-11 -1,-20 0,-12 0,-21 -1,-26 -1,-5 -2,-9 -5,-13 -3,-4 -7,-7 -11,-8 -4,-1 -8,-1 -14,-1 l -5,0 0,15 3,0 c 7,0 11,1 13,3 3,3 4,4 4,7 l 0,25 c 0,15 2,25 5,31 3,6 9,10 15,13 -6,3 -12,7 -15,13 -3,6 -5,16 -5,31 l 0,25 c 0,3 -1,4 -4,7 -2,2 -6,3 -13,3 l -3,0 0,15 z" 
-                transform="scale(0.2) matrix(-1, 0, 0, 1, 260, 0)"
-            />
-        <text y="20" x="20"/>`;
+            `<path 
+                d="m 200,200 5,0 c 6,0 10,0 14,-1 4,-1 8,-4 11,-8 3,-4 4,-8 5,-13 1,-5 1,-14 1,-26 0,-9 0,-15 1,-20 1,-5 3,-10 6,-13 3,-3 7,-5 13,-5 l 0,-16 c -6,0 -10,-2 -13,-5 -3,-3 -5,-8 -6,-13 -1,-5 -1,-11 -1,-20 0,-12 0,-21 -1,-26 -1,-5 -2,-9 -5,-13 -3,-4 -7,-7 -11,-8 -4,-1 -8,-1 -14,-1 l -5,0 0,15 3,0 c 7,0 11,1 13,3 3,3 4,4 4,7 l 0,25 c 0,15 2,25 5,31 3,6 9,10 15,13 -6,3 -12,7 -15,13 -3,6 -5,16 -5,31 l 0,25 c 0,3 -1,4 -4,7 -2,2 -6,3 -13,3 l -3,0 0,15 z" 
+                    transform="scale(0.2) matrix(-1, 0, 0, 1, 260, 0)"
+                />
+            <text y="20" x="20"/>`;
+
+        initialize() {
+            this.on('change:precondition', this.updatePrecondtion);
+            this.updatePrecondtion();
+            joint.shapes.standard.Link.prototype.initialize.apply(this, arguments);
+        }
+
+        updatePrecondtion() {
+            const precondition = this.get('precondition');
+            if(precondition){
+                this.labels([
+                    { "attrs": { "text": { "text":  precondition } } , position: 0.5 }
+                ]);
+            } else {
+                this.labels([]);
+            }     
+        }
 
         getMarkerWidth(type: any) {
             const d = (type === 'source') ? this.attr('line/sourceMarker/d') : this.attr('line/targetMarker/d');
@@ -71,7 +92,6 @@ export namespace workflow {
             opt = { offset: markerWidth, stroke: true };
             // connection point for UML shapes lies on the root group containg all the shapes components
             const modelType = view.model.get('type');
-            if (modelType.indexOf('app') === 0) opt.selector = '.state-rect-container';
             // taking the border stroke-width into account
             if (modelType === 'standard.InscribedImage') opt.selector = 'border';
             return joint.connectionPoints.boundary.call(this, line, view, magnet, opt, type, linkView);

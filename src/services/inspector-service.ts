@@ -176,7 +176,7 @@ export class InspectorService {
                                 group: 'connection',
                                 label: 'Link thickness',
                                 when: { ne: { 'attrs/line/stroke': 'transparent' }},
-                                index: 4
+                                index: 1
                             },
                             strokeDasharray: {
                                 type: 'select-box',
@@ -184,48 +184,14 @@ export class InspectorService {
                                 group: 'connection',
                                 label: 'Link style',
                                 when: { ne: { 'attrs/line/stroke': 'transparent' }},
-                                index: 5
+                                index: 2
                             },
                             stroke: {
                                 type: 'color-palette',
                                 options: options.colorPalette,
                                 group: 'connection',
                                 label: 'Color',
-                                index: 6
-                            },
-                            sourceMarker: {
-                                d: {
-                                    type: 'select-box',
-                                    options: options.arrowheadSize,
-                                    group: 'marker-source',
-                                    label: 'Source arrowhead',
-                                    index: 1
-                                },
-                                fill: {
-                                    type: 'color-palette',
-                                    options: options.colorPaletteReset,
-                                    group: 'marker-source',
-                                    label: 'Color',
-                                    when: { ne: { 'attrs/line/sourceMarker/d': 'M 0 0 0 0' }},
-                                    index: 2
-                                }
-                            },
-                            targetMarker: {
-                                d: {
-                                    type: 'select-box',
-                                    options: options.arrowheadSize,
-                                    group: 'marker-target',
-                                    label: 'Target arrowhead',
-                                    index: 1
-                                },
-                                fill: {
-                                    type: 'color-palette',
-                                    options: options.colorPaletteReset,
-                                    group: 'marker-target',
-                                    label: 'Color',
-                                    when: { ne: { 'attrs/line/targetMarker/d': 'M 0 0 0 0' }},
-                                    index: 2
-                                }
+                                index: 3
                             }
                         }
                     },
@@ -258,92 +224,37 @@ export class InspectorService {
                             index: 3
                         }
                     },
-                    labels: {
-                        type: 'list',
-                        group: 'labels',
-                        label: 'Labels',
-                        attrs: {
-                            label: {
-                                'data-tooltip': 'Set (possibly multiple) labels for the link',
-                                'data-tooltip-position': 'right',
-                                'data-tooltip-position-selector': '.joint-inspector'
-                            }
-                        },
-                        item: {
-                            type: 'object',
-                            properties: {
-                                attrs: {
-                                    text: {
-                                        text: {
-                                            type: 'content-editable',
-                                            label: 'text',
-                                            defaultValue: 'label',
-                                            index: 1,
-                                            attrs: {
-                                                label: {
-                                                    'data-tooltip': 'Set text of the label',
-                                                    'data-tooltip-position': 'right',
-                                                    'data-tooltip-position-selector': '.joint-inspector'
-                                                }
-                                            }
-                                        },
-                                        fill: {
-                                            type: 'color-palette',
-                                            options: options.colorPaletteReset,
-                                            label: 'Text Color',
-                                            index: 5
-                                        }
-                                    },
-                                    rect: {
-                                        fill: {
-                                            type: 'color-palette',
-                                            options: options.colorPaletteReset,
-                                            label: 'Fill',
-                                            index: 3
-                                        },
-                                        stroke: {
-                                            type: 'color-palette',
-                                            options: options.colorPaletteReset,
-                                            label: 'Outline',
-                                            index: 4
-                                        }
-                                    }
-                                },
-                                position: {
-                                    type: 'select-box',
-                                    options: options.labelPosition || [],
-                                    defaultValue: 0.5,
-                                    label: 'Position',
-                                    placeholder: 'Custom',
-                                    index: 2,
-                                    attrs: {
-                                        label: {
-                                            'data-tooltip': 'Position the label relative to the source of the link',
-                                            'data-tooltip-position': 'right',
-                                            'data-tooltip-position-selector': '.joint-inspector'
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    transitionType: {
+                        type: 'select-box',
+                        options: [
+                            { value: 'manual', content: 'Manual' },
+                            { value: 'auto', content: 'Auto' },
+                        ],
+                        group: 'properties',
+                        index: 1,
+                        label: 'Transition Type'
+                    },
+                    priority: {
+                        type: 'number',
+                        group: 'properties',
+                        index: 2,
+                        label: 'Priority'
+                    },
+                    precondition: {
+                        type: 'text',
+                        group: 'properties',
+                        index: 3,
+                        label: 'Pre-Condition'
+                    },
                 },
                 groups: {
-                    connection: {
-                        label: 'Connection',
+                    properties: {
+                        label: 'Properties',
                         index: 1
                     },
-                    'marker-source': {
-                        label: 'Source marker',
+                    connection: {
+                        label: 'Connection',
                         index: 2
-                    },
-                    'marker-target': {
-                        label: 'Target marker',
-                        index: 3
-                    },
-                    labels: {
-                        label: 'Labels',
-                        index: 4
                     }
                 }
             },
