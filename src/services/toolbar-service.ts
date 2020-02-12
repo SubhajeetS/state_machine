@@ -174,11 +174,11 @@ export class ToolbarService {
                     type: 'button',
                     name: 'save',
                     group: 'save',
-                    text: 'save',
+                    text: 'Save',
                     attrs: {
                         button: {
                             id: 'btn-save',
-                            'data-tooltip': 'Save',
+                            'data-tooltip': 'Save to Local Storage',
                             'data-tooltip-position': 'top',
                             'data-tooltip-position-selector': '.toolbar-container'
                         }

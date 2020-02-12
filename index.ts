@@ -1,5 +1,6 @@
  import * as joint from './vendor/rappid';
- 
+ import './css/style.css';
+
  import App from './src/app';
  
  import {StencilService} from './src/services/stencil-service';

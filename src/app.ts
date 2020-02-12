@@ -52,7 +52,7 @@ class App {
 
     createBuilder() {
 
-        joint.setTheme('modern');
+        joint.setTheme('material');
 
         this.initializePaper();
         this.initializeStencil();

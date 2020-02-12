@@ -1,3 +1,8 @@
+@import '../vendor/rappid.css';
+@import 'style.dark.css';
+@import 'style.material.css';
+@import 'style.modern.css';
+
 @font-face {
     font-family: 'Roboto Condensed';
     src: url('../assets/fonts/Roboto_Condensed/RobotoCondensed-Light.ttf');
