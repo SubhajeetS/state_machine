@@ -67,7 +67,6 @@ class App {
 
     async loadSavedWorkflow () {
         const json = await localStorage.getItem('cli:workflow');
-        debugger;
         if(json){
             this.graph.fromJSON(JSON.parse(json));
         }
@@ -312,6 +311,7 @@ class App {
 
     saveDiagram() {
         const jsonString = JSON.stringify(this.graph.toJSON());
+        console.log(jsonString);
         localStorage.setItem('cli:workflow', jsonString);
     }
     
