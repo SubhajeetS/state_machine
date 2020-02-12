@@ -412,7 +412,7 @@ export class InspectorService {
                         label: 'State'
                     },
                     attrs: {
-                        '.state-rect': {
+                        'body': {
                             fill: {
                                 type: 'color-palette',
                                 options: options.colorPalette,
@@ -453,7 +453,7 @@ export class InspectorService {
                                 index: 4
                             }
                         },
-                        '.state-val-text': {
+                        'label': {
                             fill: {
                                 type: 'color-palette',
                                 options: options.colorPalette,

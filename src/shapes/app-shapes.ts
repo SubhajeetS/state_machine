@@ -1,7 +1,6 @@
 import * as joint from '../../vendor/rappid';
 import { memoize } from 'lodash';
 
-const { Generic } = joint.shapes.basic;
 export namespace workflow {
     export class Link extends joint.shapes.standard.Link {
 
@@ -97,7 +96,6 @@ export namespace workflow {
             return joint.connectionPoints.boundary.call(this, line, view, magnet, opt, type, linkView);
         }
     }
-
     export class StartState extends joint.shapes.fsa.StartState {
         defaults() {
             return joint.util.defaultsDeep({
@@ -113,7 +111,6 @@ export namespace workflow {
             }, joint.shapes.fsa.StartState.prototype.defaults);
         }
     }
-
     export class EndState extends joint.shapes.fsa.EndState {
         defaults() {
             return joint.util.defaultsDeep({
@@ -145,69 +142,44 @@ export namespace workflow {
             }, joint.shapes.standard.Polygon.prototype.defaults);
         }
     }
-    export class State extends Generic {
+    export class State extends joint.shapes.standard.Rectangle {
         defaults() {
             return joint.util.defaultsDeep(
                 {
                     type: 'workflow.State',
                     attrs: {
                         rect: { 'width': 200 },
-                        '.state-rect': {
-                            'width': 200, 
-                            'height': 150, 
-                            'rx': 10, 
-                            'ry': 10,
+                        'body': {
+                            'width': 50, 
+                            'height': 30, 
+                            'rx': 2, 
+                            'ry': 2,
                             'fill': '#fff', 
                             'stroke': '#000000', 
                             'stroke-width': 2
                         },
-                        '.state-precondition': {
-                            'ref': '.state-rect',
-                            'ref-x': -15, 
-                            'ref-y': -50, 
-                            'fill': '#000000',
-                            'transform': `scale(0.2) matrix(-1, 0, 0, 1, 260, 0)`,
-                            'display': 'none'
-                        },
-                        '.state-val-text': {
-                            'ref': '.state-rect',
-                            'ref-x': .5, 
-                            'ref-y': .3, 
+                        'label': {
                             'text-anchor': 'middle',
                             'fill': '#000000', 
                             'font-family': 'Courier New', 
                             'font-size': 14
-                        },
-                        '.state-precondition-text': {
-                            'ref': '.state-precondition',
-                            'ref-y': 10, 
-                            'fill': '#000000', 
-                            'font-weight': 'bold',
-                            'font-family': 'Courier New', 
-                            'font-size': 14
-                        },
+                        }
                     },
                     state: '',
-                    precondition: ''
-                }, Generic.prototype.defaults);
+                }, 
+                joint.shapes.standard.Rectangle.prototype.defaults
+            );
         }
 
-        markup =
-            `<g class="rotatable state-rect-container">
-                <g class="scalable">
-                    <rect class="state-rect"/>
-                </g>
-                <text class="state-val-text"/>
-             </g>`;
 
         initialize() {
             this.on('change:state', this.updateState);
             this.updateState();
-            Generic.prototype.initialize.apply(this, arguments);
+            joint.shapes.standard.Rectangle.prototype.initialize.apply(this, arguments);
         }
 
         updateState() {
-            this.attr('.state-val-text/text', this.get('state'));
+            this.attr('label/text', this.get('state'));
         }
     }
 }
