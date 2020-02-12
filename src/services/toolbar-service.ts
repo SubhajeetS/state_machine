@@ -29,8 +29,7 @@ export class ToolbarService {
                 'fullscreen': { index: 4 },
                 'zoom': { index: 5 },
                 'grid': { index: 6 },
-                'snapline': { index: 7 },
-                'save': { index : 8}
+                'save': { index : 7}
             },
 
             tools: [
@@ -160,27 +159,6 @@ export class ToolbarService {
                     value: 10
                 },
                 {
-                    type: 'separator',
-                    group: 'snapline'
-                },
-                {
-                    type: 'checkbox',
-                    name: 'snapline',
-                    group: 'snapline',
-                    label: 'Snaplines:',
-                    value: true,
-                    attrs: {
-                        input: {
-                            id: 'snapline-switch'
-                        },
-                        label: {
-                            'data-tooltip': 'Enable/Disable Snaplines',
-                            'data-tooltip-position': 'top',
-                            'data-tooltip-position-selector': '.toolbar-container'
-                        }
-                    }
-                },
-                {
                     type: 'fullscreen',
                     name: 'fullscreen',
                     group: 'fullscreen',
@@ -196,6 +174,7 @@ export class ToolbarService {
                     type: 'button',
                     name: 'save',
                     group: 'save',
+                    text: 'save',
                     attrs: {
                         button: {
                             id: 'btn-save',

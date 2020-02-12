@@ -314,17 +314,6 @@ class App {
         console.log(jsonString);
         localStorage.setItem('cli:workflow', jsonString);
     }
-    
-    changeSnapLines(checked: boolean) {
-
-        if (checked) {
-            this.snaplines.startListening();
-            this.stencilService.stencil.options.snaplines = this.snaplines;
-        } else {
-            this.snaplines.stopListening();
-            this.stencilService.stencil.options.snaplines = null;
-        }
-    }
 
     initializeKeyboardShortcuts() {
 
