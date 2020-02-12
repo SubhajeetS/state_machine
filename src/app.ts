@@ -62,6 +62,15 @@ class App {
         this.initializeToolbar();
         this.initializeKeyboardShortcuts();
         this.initializeTooltips();
+        this.loadSavedWorkflow();
+    }
+
+    async loadSavedWorkflow () {
+        const json = await localStorage.getItem('cli:workflow');
+        debugger;
+        if(json){
+            this.graph.fromJSON(JSON.parse(json));
+        }
     }
 
     initializePaper() {
@@ -302,7 +311,8 @@ class App {
     }
 
     saveDiagram() {
-        console.log(this.graph.toJSON());
+        const jsonString = JSON.stringify(this.graph.toJSON());
+        localStorage.setItem('cli:workflow', jsonString);
     }
     
     changeSnapLines(checked: boolean) {
