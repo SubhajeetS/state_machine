@@ -5,8 +5,6 @@
   "main": "index.html",
   "scripts": {
     "build": "node node_modules/webpack/bin/webpack.js",
-    "live-server": "http-server ./ --cors",
-    "start": "npm run build && npm run live-server",
     "serve": "webpack-dev-server --open"
   },
   "author": "Sneha Periwal",
